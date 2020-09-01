@@ -7,6 +7,8 @@ from googletrans import Translator
 
 client = commands.Bot(command_prefix = '.')
 client.remove_command('help')
+bot = commands.Bot(...)
+bot.message = 0
 
 @client.event
 async def on_ready():
@@ -105,22 +107,16 @@ async def help(ctx):
 Support server: https://discord.gg/TE5Hwaz
 Created by ZizOhNo#1012''')
 @client.command()
-async def setjoinmessage (ctx, arg, message=None):
-    if message == None:
-        await ctx.send(f'No message has been sent')
-    else:
-        await ctx.send(f'''The message is "{message}"''')
-
-
+async def setjoinmessage (ctx, *, message=None):
+        bot.message = message
+        await ctx.send(f'''The message is "{bot.message}"''')
 
 @client.event
-async def on_member_join(member, message):
-    if message == None:
+async def on_member_join(member):
+    if bot.message == None:
         pass
-        
     else:
-        await member.send(f'{message}')
-
+        await member.send(f'{bot.message}')
     
 
 
